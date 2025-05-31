@@ -12,40 +12,40 @@ import java.util.Optional;
 public class UserDetail2ServiceImpl implements EntityService<UserDetail2> {
 
     @Autowired
-    UserDetail2Repository userDetail2Repository;
+    UserDetail2Repository userDetailRepository;
 
     @Override
     public List<UserDetail2> fetchAll() {
-        return userDetail2Repository.findAll();
+        return userDetailRepository.findAll();
     }
 
     @Override
     public Optional<UserDetail2> findById(Long id) {
-        return userDetail2Repository.findById(id);
+        return userDetailRepository.findById(id);
     }
 
     @Override
-    public UserDetail2 create(UserDetail2 entity) {
-        return userDetail2Repository.save(entity);
+    public UserDetail2 create(UserDetail2 userDetail) {
+        return userDetailRepository.save(userDetail);
     }
 
     @Override
-    public UserDetail2 update(Long id, UserDetail2 entity) {
-        return userDetail2Repository.findById(id)
+    public UserDetail2 update(Long id, UserDetail2 newUserDetail) {
+        return userDetailRepository.findById(id)
                 .map(existing -> {
-                    existing.setName(entity.getName());
-                    existing.setAge(entity.getAge());
-                    existing.setUserAddress(entity.getUserAddress());
-                    return userDetail2Repository.save(existing);
+                    existing.setName(newUserDetail.getName());
+                    existing.setAge(newUserDetail.getAge());
+                    existing.setUserAddress(newUserDetail.getUserAddress());
+                    return userDetailRepository.save(existing);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("UserDetail not found with ID: " + id));
     }
 
     @Override
     public void delete(Long id) {
-        if (!userDetail2Repository.existsById(id)) {
+        if (!userDetailRepository.existsById(id)) {
             throw new EntityNotFoundException("UserDetail not found with ID: " + id);
         }
-        userDetail2Repository.deleteById(id);
+        userDetailRepository.deleteById(id);
     }
 }

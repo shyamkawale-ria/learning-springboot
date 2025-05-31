@@ -14,29 +14,29 @@ import java.util.List;
 public class UserAddress1Controller {
 
     @Autowired
-    EntityService<UserAddress1> userAddress1EntityService;
+    EntityService<UserAddress1> userAddressEntityService;
 
     @GetMapping
     public List<UserAddress1> getUserAddresss() {
-        return userAddress1EntityService.fetchAll();
+        return userAddressEntityService.fetchAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserAddress1> getUserAddressById(@PathVariable Long id) {
-        return userAddress1EntityService.findById(id)
+        return userAddressEntityService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<UserAddress1> createUserAddress(@RequestBody UserAddress1 userAddress) {
-        return new ResponseEntity<>(userAddress1EntityService.create(userAddress), HttpStatus.CREATED);
+        return new ResponseEntity<>(userAddressEntityService.create(userAddress), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserAddress1> updateUserAddress(@PathVariable Long id, @RequestBody UserAddress1 userAddress) {
         try {
-            return ResponseEntity.ok(userAddress1EntityService.update(id, userAddress));
+            return ResponseEntity.ok(userAddressEntityService.update(id, userAddress));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
@@ -45,7 +45,7 @@ public class UserAddress1Controller {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserAddress(@PathVariable Long id) {
         try {
-            userAddress1EntityService.delete(id);
+            userAddressEntityService.delete(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();

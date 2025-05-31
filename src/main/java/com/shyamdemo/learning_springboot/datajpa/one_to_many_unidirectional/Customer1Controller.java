@@ -1,4 +1,4 @@
-package com.shyamdemo.learning_springboot.datajpa.one_to_one_bidirectional;
+package com.shyamdemo.learning_springboot.datajpa.one_to_many_unidirectional;
 
 import com.shyamdemo.learning_springboot.datajpa.EntityService;
 import jakarta.persistence.EntityNotFoundException;
@@ -9,25 +9,25 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RequestMapping("api/one-to-one-bi/userdetails")
+@RequestMapping("api/one-to-many-uni/customer")
 @RestController
-public class UserDetail2Controller {
+public class Customer1Controller {
 
     @Autowired
-    EntityService<UserDetail2> userDetailEntityService;
+    EntityService<Customer1> customerEntityService;
 
     /*
      */
     @GetMapping
-    public List<UserDetail2> getUserDetails() {
-        return userDetailEntityService.fetchAll();
+    public List<Customer1> getCustomers() {
+        return customerEntityService.fetchAll();
     }
 
     /*
      */
     @GetMapping("/{id}")
-    public ResponseEntity<UserDetail2> getUserDetailById(@PathVariable Long id) {
-        return userDetailEntityService.findById(id)
+    public ResponseEntity<Customer1> getCustomerById(@PathVariable Long id) {
+        return customerEntityService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -35,23 +35,23 @@ public class UserDetail2Controller {
     /*
      */
     @PostMapping
-    public ResponseEntity<UserDetail2> createUserDetail(@RequestBody UserDetail2 userDetail) {
-        return new ResponseEntity<>(userDetailEntityService.create(userDetail), HttpStatus.CREATED);
+    public ResponseEntity<Customer1> createCustomer(@RequestBody Customer1 customer1) {
+        return new ResponseEntity<>(customerEntityService.create(customer1), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDetail2> updateUserDetail(@PathVariable Long id, @RequestBody UserDetail2 userDetail) {
+    public ResponseEntity<Customer1> updateCustomer(@PathVariable Long id, @RequestBody Customer1 customer1) {
         try {
-            return ResponseEntity.ok(userDetailEntityService.update(id, userDetail));
+            return ResponseEntity.ok(customerEntityService.update(id, customer1));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUserDetail(@PathVariable Long id) {
+    public ResponseEntity<?> deleteCustomer(@PathVariable Long id) {
         try {
-            userDetailEntityService.delete(id);
+            customerEntityService.delete(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();

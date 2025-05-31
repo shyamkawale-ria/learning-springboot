@@ -12,42 +12,42 @@ import java.util.Optional;
 public class UserAddress1ServiceImpl implements EntityService<UserAddress1> {
 
     @Autowired
-    UserAddress1Repository userAddress1Repository;
+    UserAddress1Repository userAddressRepository;
 
     @Override
     public List<UserAddress1> fetchAll() {
-        return userAddress1Repository.findAll();
+        return userAddressRepository.findAll();
     }
 
     @Override
     public Optional<UserAddress1> findById(Long id) {
-        return userAddress1Repository.findById(id);
+        return userAddressRepository.findById(id);
     }
 
     @Override
-    public UserAddress1 create(UserAddress1 entity) {
-        return userAddress1Repository.save(entity);
+    public UserAddress1 create(UserAddress1 userAddress) {
+        return userAddressRepository.save(userAddress);
     }
 
     @Override
-    public UserAddress1 update(Long id, UserAddress1 entity) {
-        return userAddress1Repository.findById(id)
+    public UserAddress1 update(Long id, UserAddress1 newUserAddress) {
+        return userAddressRepository.findById(id)
                 .map(existing -> {
-                    existing.setCity(entity.getCity());
-                    existing.setCountry(entity.getCountry());
-                    existing.setState(entity.getState());
-                    existing.setStreet(entity.getStreet());
-                    existing.setPinCode(entity.getPinCode());
-                    return userAddress1Repository.save(existing);
+                    existing.setCity(newUserAddress.getCity());
+                    existing.setCountry(newUserAddress.getCountry());
+                    existing.setState(newUserAddress.getState());
+                    existing.setStreet(newUserAddress.getStreet());
+                    existing.setPinCode(newUserAddress.getPinCode());
+                    return userAddressRepository.save(existing);
                 })
                 .orElseThrow(() -> new EntityNotFoundException("UserAddress not found with ID: " + id));
     }
 
     @Override
     public void delete(Long id) {
-        if (!userAddress1Repository.existsById(id)) {
+        if (!userAddressRepository.existsById(id)) {
             throw new EntityNotFoundException("UserAddress not found with ID: " + id);
         }
-        userAddress1Repository.deleteById(id);
+        userAddressRepository.deleteById(id);
     }
 }

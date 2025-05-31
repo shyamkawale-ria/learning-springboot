@@ -14,7 +14,7 @@ import java.util.List;
 public class UserDetail1Controller {
 
     @Autowired
-    EntityService<UserDetail1> userDetail1EntityService;
+    EntityService<UserDetail1> userDetailEntityService;
 
     /*
     Hibernate: select ud1_0.id,ud1_0.age,ud1_0.name,ud1_0.address_id from user_details1 ud1_0
@@ -22,7 +22,7 @@ public class UserDetail1Controller {
      */
     @GetMapping
     public List<UserDetail1> getUserDetails() {
-        return userDetail1EntityService.fetchAll();
+        return userDetailEntityService.fetchAll();
     }
 
     /*
@@ -30,7 +30,7 @@ public class UserDetail1Controller {
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserDetail1> getUserDetailById(@PathVariable Long id) {
-        return userDetail1EntityService.findById(id)
+        return userDetailEntityService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -41,13 +41,13 @@ public class UserDetail1Controller {
      */
     @PostMapping
     public ResponseEntity<UserDetail1> createUserDetail(@RequestBody UserDetail1 userDetail) {
-        return new ResponseEntity<>(userDetail1EntityService.create(userDetail), HttpStatus.CREATED);
+        return new ResponseEntity<>(userDetailEntityService.create(userDetail), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDetail1> updateUserDetail(@PathVariable Long id, @RequestBody UserDetail1 userDetail) {
         try {
-            return ResponseEntity.ok(userDetail1EntityService.update(id, userDetail));
+            return ResponseEntity.ok(userDetailEntityService.update(id, userDetail));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
@@ -56,7 +56,7 @@ public class UserDetail1Controller {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserDetail(@PathVariable Long id) {
         try {
-            userDetail1EntityService.delete(id);
+            userDetailEntityService.delete(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
