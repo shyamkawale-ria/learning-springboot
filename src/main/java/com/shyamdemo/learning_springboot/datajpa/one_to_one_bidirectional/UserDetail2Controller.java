@@ -14,20 +14,20 @@ import java.util.List;
 public class UserDetail2Controller {
 
     @Autowired
-    EntityService<UserDetail2> userDetail1OneToOneBiService;
+    EntityService<UserDetail2> userDetail2OneToOneBiService;
 
     /*
      */
     @GetMapping
     public List<UserDetail2> getUserDetails() {
-        return userDetail1OneToOneBiService.fetchAll();
+        return userDetail2OneToOneBiService.fetchAll();
     }
 
     /*
      */
     @GetMapping("/{id}")
     public ResponseEntity<UserDetail2> getUserDetailById(@PathVariable Long id) {
-        return userDetail1OneToOneBiService.findById(id)
+        return userDetail2OneToOneBiService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
@@ -36,13 +36,13 @@ public class UserDetail2Controller {
      */
     @PostMapping
     public ResponseEntity<UserDetail2> createUserDetail(@RequestBody UserDetail2 userDetail) {
-        return new ResponseEntity<>(userDetail1OneToOneBiService.create(userDetail), HttpStatus.CREATED);
+        return new ResponseEntity<>(userDetail2OneToOneBiService.create(userDetail), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserDetail2> updateUserDetail(@PathVariable Long id, @RequestBody UserDetail2 userDetail) {
         try {
-            return ResponseEntity.ok(userDetail1OneToOneBiService.update(id, userDetail));
+            return ResponseEntity.ok(userDetail2OneToOneBiService.update(id, userDetail));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
@@ -51,7 +51,7 @@ public class UserDetail2Controller {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserDetail(@PathVariable Long id) {
         try {
-            userDetail1OneToOneBiService.delete(id);
+            userDetail2OneToOneBiService.delete(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();

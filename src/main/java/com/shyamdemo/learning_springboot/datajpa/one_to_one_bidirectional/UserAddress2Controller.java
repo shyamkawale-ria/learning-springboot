@@ -14,29 +14,29 @@ import java.util.List;
 public class UserAddress2Controller {
 
     @Autowired
-    EntityService<UserAddress2> userAddress1OneToOneBiService;
+    EntityService<UserAddress2> userAddress2OneToOneBiService;
 
     @GetMapping
     public List<UserAddress2> getUserAddresss() {
-        return userAddress1OneToOneBiService.fetchAll();
+        return userAddress2OneToOneBiService.fetchAll();
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<UserAddress2> getUserAddressById(@PathVariable Long id) {
-        return userAddress1OneToOneBiService.findById(id)
+        return userAddress2OneToOneBiService.findById(id)
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     @PostMapping
     public ResponseEntity<UserAddress2> createUserAddress(@RequestBody UserAddress2 userAddress) {
-        return new ResponseEntity<>(userAddress1OneToOneBiService.create(userAddress), HttpStatus.CREATED);
+        return new ResponseEntity<>(userAddress2OneToOneBiService.create(userAddress), HttpStatus.CREATED);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<UserAddress2> updateUserAddress(@PathVariable Long id, @RequestBody UserAddress2 userAddress) {
         try {
-            return ResponseEntity.ok(userAddress1OneToOneBiService.update(id, userAddress));
+            return ResponseEntity.ok(userAddress2OneToOneBiService.update(id, userAddress));
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
         }
@@ -45,7 +45,7 @@ public class UserAddress2Controller {
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteUserAddress(@PathVariable Long id) {
         try {
-            userAddress1OneToOneBiService.delete(id);
+            userAddress2OneToOneBiService.delete(id);
             return ResponseEntity.noContent().build();
         } catch (EntityNotFoundException e) {
             return ResponseEntity.notFound().build();
